@@ -1,0 +1,29 @@
+version: '2.2'
+services:
+  app:
+    container_name: mock_api_rails
+    build:
+      network: host
+      context: .
+      dockerfile: ./docker/rails/Dockerfile
+    command: docker/rails/provision.sh
+    ports:
+      - '5000:5000'
+    volumes:
+      - /var/tmp
+      - ./log:/app/log
+      - ./db:/app/db
+    env_file: .env
+  caddy:
+    container_name: mock_api_caddy
+    image: caddy:2.6.2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - $PWD/Caddyfile:/etc/caddy/Caddyfile
+
+volumes:
+  db_data:

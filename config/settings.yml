@@ -1,6 +1,6 @@
 default_admin_password: <%= ENV.fetch('DEFAULT_ADMIN_PASSWORD') { "api-admin" } %>
 jwt_token_exp:
-  access: 5            # 5 minutes
+  access: 0.5            # 5 minutes
   refresh: 10080        # 7 days
   reset_password: 1440  # 24 hours
 default_email_from: <%= ENV.fetch('DEFAULT_EMAIL_FROM') { "mock.api.smtp@gmail.com" } %>
