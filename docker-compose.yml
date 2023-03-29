@@ -1,29 +1,57 @@
 version: '2.2'
 services:
   app:
-    container_name: mock_api_rails
+    container_name: mock-api_rails
     build:
       network: host
       context: .
       dockerfile: ./docker/rails/Dockerfile
     command: docker/rails/provision.sh
     ports:
-      - '5000:5000'
+      - '3000:3000'
     volumes:
       - /var/tmp
       - ./log:/app/log
-      - ./db:/app/db
+    extends:
+      file: ./docker/mysql/password.yml
+      service: password
     env_file: .env
-  caddy:
-    container_name: mock_api_caddy
-    image: caddy:2.6.2-alpine
-    restart: unless-stopped
+    depends_on:
+      - db
+  db:
+    container_name: mock-api_mysql
+    build:
+      context: .
+      dockerfile: ./docker/mysql/Dockerfile
     ports:
-      - "80:80"
-      - "443:443"
-      - "443:443/udp"
+      - '3306:3306'
     volumes:
-      - $PWD/Caddyfile:/etc/caddy/Caddyfile
+      - db_data:/var/lib/mysql
+    extends:
+      file: ./docker/mysql/password.yml
+      service: password
+  nginx:
+    container_name: mock-api_nginx
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - /usr/local/ssl/certs:/etc/nginx/certs
+    volumes_from:
+      - app
+  # caddy:
+  #   container_name: mock-api_caddy
+  #   image: caddy:2.6.2-alpine
+  #   restart: unless-stopped
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #     - "443:443/udp"
+  #   volumes:
+  #     - $PWD/Caddyfile:/etc/caddy/Caddyfile
 
 volumes:
   db_data:
