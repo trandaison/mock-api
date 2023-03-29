@@ -18,6 +18,7 @@ RUN mkdir /app
 WORKDIR /app
 COPY Gemfile /app/Gemfile
 COPY Gemfile.lock /app/Gemfile.lock
+RUN bundle lock --add-platform x86-mingw32 x86-mswin32 x64-mingw32 java
 RUN bundle install -j4
 
 # COPY package.json ./
