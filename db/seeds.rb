@@ -16,6 +16,6 @@ end
 40.times.each do
   blog = Blog.create!(title: Faker::Movie.title, content: Faker::Lorem.paragraphs.join("\n"))
   rand(0..100).times.each do
-    blog.comments.create!(user: User.order("RANDOM()").first, content: Faker::Lorem.paragraphs.join("\n"))
+    blog.comments.create!(user: User.order("RAND()").first, content: Faker::Lorem.paragraphs.join("\n"))
   end
 end

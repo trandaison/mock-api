@@ -474,9 +474,9 @@ paths:
               - user[email]
               - user[password]
 servers:
-- url: "{heroku}"
+- url: "{mock-api.nals.vn}"
   variables:
-    heroku:
+    mock-api.nals.vn:
       default: https://mock-api.nals.vn
 - url: "{localhost}"
   variables:

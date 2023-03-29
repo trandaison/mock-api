@@ -26,7 +26,7 @@ RSpec.configure do |config|
         {
           url: '{mock-api.nals.vn}',
           variables: {
-            heroku: {
+            'mock-api.nals.vn': {
               default: ENV.fetch('HOST') { 'https://mock-api.nals.vn' }
             }
           }
@@ -52,7 +52,7 @@ RSpec.configure do |config|
         {
           url: '{mock-api.nals.vn}',
           variables: {
-            heroku: {
+            'mock-api.nals.vn': {
               default: ENV.fetch('HOST') { 'https://mock-api.nals.vn' }
             }
           }
