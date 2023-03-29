@@ -30,28 +30,28 @@ services:
     extends:
       file: ./docker/mysql/password.yml
       service: password
-  nginx:
-    container_name: mock-api_nginx
-    build:
-      context: .
-      dockerfile: ./docker/nginx/Dockerfile
-    ports:
-      - '80:80'
-      - '443:443'
-    volumes:
-      - /usr/local/ssl/certs:/etc/nginx/certs
-    volumes_from:
-      - app
-  # caddy:
-  #   container_name: mock-api_caddy
-  #   image: caddy:2.6.2-alpine
-  #   restart: unless-stopped
+  # nginx:
+  #   container_name: mock-api_nginx
+  #   build:
+  #     context: .
+  #     dockerfile: ./docker/nginx/Dockerfile
   #   ports:
-  #     - "80:80"
-  #     - "443:443"
-  #     - "443:443/udp"
+  #     - '80:80'
+  #     - '443:443'
   #   volumes:
-  #     - $PWD/Caddyfile:/etc/caddy/Caddyfile
+  #     - /usr/local/ssl/certs:/etc/nginx/certs
+  #   volumes_from:
+  #     - app
+  caddy:
+    container_name: mock-api_caddy
+    image: caddy:2.6.2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - $PWD/Caddyfile:/etc/caddy/Caddyfile
 
 volumes:
   db_data:

@@ -1,4 +1,4 @@
-FROM ruby:2.3.8
+FROM ruby:2.7.2
 
 RUN apt-get update -qq && \
     apt-get install -y apt-utils \
@@ -20,8 +20,8 @@ COPY Gemfile /app/Gemfile
 COPY Gemfile.lock /app/Gemfile.lock
 RUN bundle install -j4
 
-COPY package.json ./
-RUN yarn install
+# COPY package.json ./
+# RUN yarn install
 
 COPY . /app
 

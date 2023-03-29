@@ -1,2 +1,2 @@
-sontd.tech
-reverse_proxy app:5000
+mock-api.nals.vn
+reverse_proxy app:3000
