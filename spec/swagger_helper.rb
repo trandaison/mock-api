@@ -24,10 +24,10 @@ RSpec.configure do |config|
       paths: {},
       servers: [
         {
-          url: '{heroku}',
+          url: '{mock-api.nals.vn}',
           variables: {
             heroku: {
-              default: ENV.fetch('HOST') { 'https://api-placeholder.herokuapp.com' }
+              default: ENV.fetch('HOST') { 'https://mock-api.nals.vn' }
             }
           }
         },
@@ -50,10 +50,10 @@ RSpec.configure do |config|
       paths: {},
       servers: [
         {
-          url: '{heroku}',
+          url: '{mock-api.nals.vn}',
           variables: {
             heroku: {
-              default: ENV.fetch('HOST') { 'https://api-placeholder.herokuapp.com' }
+              default: ENV.fetch('HOST') { 'https://mock-api.nals.vn' }
             }
           }
         },

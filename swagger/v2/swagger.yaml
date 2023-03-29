@@ -872,7 +872,7 @@ servers:
 - url: "{heroku}"
   variables:
     heroku:
-      default: https://api-placeholder.herokuapp.com
+      default: https://mock-api.nals.vn
 - url: "{localhost}"
   variables:
     localhost:
