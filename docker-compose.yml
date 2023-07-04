@@ -7,6 +7,7 @@ services:
       context: .
       dockerfile: ./docker/rails/Dockerfile
     command: docker/rails/provision.sh
+    restart: always
     ports:
       - '3000:3000'
     volumes:
@@ -23,6 +24,7 @@ services:
     build:
       context: .
       dockerfile: ./docker/mysql/Dockerfile
+    restart: always
     ports:
       - '3306:3306'
     volumes:
@@ -35,6 +37,7 @@ services:
   #   build:
   #     context: .
   #     dockerfile: ./docker/nginx/Dockerfile
+  #   restart: always
   #   ports:
   #     - '80:80'
   #     - '443:443'
@@ -47,9 +50,9 @@ services:
     image: caddy:2.6.2-alpine
     restart: unless-stopped
     ports:
-      - "80:80"
-      - "443:443"
-      - "443:443/udp"
+      - '80:80'
+      - '443:443'
+      - '443:443/udp'
     volumes:
       - $PWD/Caddyfile:/etc/caddy/Caddyfile
 

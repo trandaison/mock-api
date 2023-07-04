@@ -69,7 +69,7 @@ RSpec.configure do |config|
       components: {
         securitySchemes: {
           Authorization: {
-            description: 'JWT token for authorization. Example: `Bearer my-jwt-token`',
+            description: 'JWT token for authorization (without prefix `Bearer`). Example: `myabc124.jwtabc123.tokenabc123`',
             type: :http,
             scheme: 'bearer',
             bearerFormat: JWT
@@ -181,10 +181,11 @@ RSpec.configure do |config|
                   },
                   required: %w[url]
                 },
+                admin: { type: :boolean },
                 created_at: { type: :string },
                 updated_at: { type: :string },
               },
-              required: %w[email name avatar created_at updated_at]
+              required: %w[email name avatar admin created_at updated_at]
           },
           Pagination: {
             type: :object,

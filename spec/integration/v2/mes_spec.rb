@@ -20,14 +20,14 @@ describe 'Api::V2::MesController', swagger_doc: 'v2/swagger.yaml' do
           required: %w[data]
 
         let!(:user) { User.create(email: 'email@gmail.com', password: 'password', name: 'name' ) }
-        let(:authorization) { 'Bearer ' + user.issue_jwt_token }
+        let(:Authorization) { 'Bearer ' + user.issue_jwt_token }
 
         run_test!
       end
 
       response '401', 'Unauthorized' do
         schema '$ref': '#/components/schemas/Error'
-        let(:authorization) { 'Bearer -' }
+        let(:Authorization) { 'Bearer -' }
         run_test!
       end
     end
@@ -69,7 +69,7 @@ describe 'Api::V2::MesController', swagger_doc: 'v2/swagger.yaml' do
           },
           required: %w[data]
         let(:user) { User.create(email: 'email@gmail.com', password: 'password', name: 'name' ) }
-        let(:authorization) { 'Bearer ' + user.issue_jwt_token }
+        let(:Authorization) { 'Bearer ' + user.issue_jwt_token }
         let(:me) { { me: { name: 'Superman' } } }
 
         run_test!
@@ -79,7 +79,7 @@ describe 'Api::V2::MesController', swagger_doc: 'v2/swagger.yaml' do
         schema '$ref': '#/components/schemas/Error'
 
         let(:user) { User.create(email: 'email@gmail.com', password: 'password', name: 'name' ) }
-        let(:authorization) { 'Bearer ' + user.issue_jwt_token }
+        let(:Authorization) { 'Bearer ' + user.issue_jwt_token }
         let('me[email]') { 'invalid-email' }
 
         run_test!
@@ -87,7 +87,7 @@ describe 'Api::V2::MesController', swagger_doc: 'v2/swagger.yaml' do
 
       response '401', 'Unauthorized' do
         schema '$ref': '#/components/schemas/Error'
-        let(:authorization) { 'Bearer -' }
+        let(:Authorization) { 'Bearer -' }
 
         run_test!
       end

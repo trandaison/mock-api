@@ -26,6 +26,10 @@ Rails.application.routes.draw do
       resources :users, only: :create
       resource :me, only: %i[show update]
       resource :reset_password, only: %i[create show update]
+
+      namespace :admin do
+        resources :users
+      end
     end
   end
 

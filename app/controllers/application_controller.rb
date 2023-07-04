@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::API
   before_action :authorized
-  wrap_parameters false
+  # wrap_parameters true
   include Pagy::Backend
 
   rescue_from ActiveRecord::RecordNotFound do |exception|

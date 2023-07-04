@@ -33,7 +33,7 @@ describe 'Api::V2::CommentsController', swagger_doc: 'v2/swagger.yaml' do
           required: %w[data]
 
         let!(:user) { User.create(email: 'email@gmail.com', password: 'password', name: 'name' ) }
-        let(:authorization) { 'Bearer ' + user.issue_jwt_token }
+        let(:Authorization) { 'Bearer ' + user.issue_jwt_token }
 
         let(:blog_id) { Blog.create(title: 'foo', content: 'bar', image: '').id }
         let(:comment) { { comment: { content: 'foo' } } }
@@ -44,7 +44,7 @@ describe 'Api::V2::CommentsController', swagger_doc: 'v2/swagger.yaml' do
       response '401', 'Unauthorized' do
         schema '$ref': '#/components/schemas/Error'
 
-        let(:authorization) { 'Bearer ok' }
+        let(:Authorization) { 'Bearer ok' }
         let(:blog_id) { Blog.create(title: 'foo', content: 'bar', image: '').id }
         let(:comment) { { comment: { content: 'foo' } } }
 
@@ -55,7 +55,7 @@ describe 'Api::V2::CommentsController', swagger_doc: 'v2/swagger.yaml' do
         schema '$ref': '#/components/schemas/Error'
 
         let!(:user) { User.create(email: 'email@gmail.com', password: 'password', name: 'name' ) }
-        let(:authorization) { 'Bearer ' + user.issue_jwt_token }
+        let(:Authorization) { 'Bearer ' + user.issue_jwt_token }
         let(:blog_id) { 'foo' }
         let(:comment) { { comment: { content: 'foo' } } }
 
@@ -65,7 +65,7 @@ describe 'Api::V2::CommentsController', swagger_doc: 'v2/swagger.yaml' do
       response '422', 'Unprocessable entity' do
         schema '$ref' => '#/components/schemas/Error'
         let!(:user) { User.create(email: 'email@gmail.com', password: 'password', name: 'name' ) }
-        let(:authorization) { 'Bearer ' + user.issue_jwt_token }
+        let(:Authorization) { 'Bearer ' + user.issue_jwt_token }
 
         let(:blog_id) { Blog.create(title: 'foo', content: 'bar', image: '').id }
         let(:comment) { { comment: { content: '' } } }
@@ -174,7 +174,7 @@ describe 'Api::V2::CommentsController', swagger_doc: 'v2/swagger.yaml' do
           required: %w[data]
 
         let!(:user) { User.create(email: 'email@gmail.com', password: 'password', name: 'name' ) }
-        let(:authorization) { 'Bearer ' + user.issue_jwt_token }
+        let(:Authorization) { 'Bearer ' + user.issue_jwt_token }
         let(:blog_id) { Blog.create(title: 'foo', content: 'bar', image: '').id }
         let!(:original_comment) { Comment.create(content: 'foo', blog_id: blog_id, user_id: user.id) }
         let(:id) { original_comment.id }
@@ -187,7 +187,7 @@ describe 'Api::V2::CommentsController', swagger_doc: 'v2/swagger.yaml' do
         schema '$ref': '#/components/schemas/Error'
 
         let!(:user) { User.create(email: 'email@gmail.com', password: 'password', name: 'name' ) }
-        let(:authorization) { 'Bearer -' }
+        let(:Authorization) { 'Bearer -' }
         let(:blog_id) { Blog.create(title: 'foo', content: 'bar', image: '').id }
         let(:id) { Comment.create(content: 'foo', blog_id: blog_id, user_id: user.id).id }
         let(:comment) { { comment: { content: 'foo' } } }
@@ -199,7 +199,7 @@ describe 'Api::V2::CommentsController', swagger_doc: 'v2/swagger.yaml' do
         schema '$ref': '#/components/schemas/Error'
 
         let!(:user) { User.create(email: 'email@gmail.com', password: 'password', name: 'name' ) }
-        let(:authorization) { 'Bearer ' + user.issue_jwt_token }
+        let(:Authorization) { 'Bearer ' + user.issue_jwt_token }
         let(:id) { 'foo' }
         let(:comment) { { comment: { content: 'foo' } } }
 
@@ -209,7 +209,7 @@ describe 'Api::V2::CommentsController', swagger_doc: 'v2/swagger.yaml' do
       response '422', 'Unprocessable entity' do
         schema '$ref' => '#/components/schemas/Error'
         let!(:user) { User.create(email: 'email@gmail.com', password: 'password', name: 'name' ) }
-        let(:authorization) { 'Bearer ' + user.issue_jwt_token }
+        let(:Authorization) { 'Bearer ' + user.issue_jwt_token }
         let(:blog_id) { Blog.create(title: 'foo', content: 'bar', image: '').id }
         let(:id) { Comment.create(content: 'foo', blog_id: blog_id, user_id: user.id).id }
         let(:comment) { { comment: { content: "invalid-length" * 400 } } }
@@ -229,7 +229,7 @@ describe 'Api::V2::CommentsController', swagger_doc: 'v2/swagger.yaml' do
 
       response '204', 'Blog deleted' do
         let!(:user) { User.create(email: 'email@gmail.com', password: 'password', name: 'name' ) }
-        let(:authorization) { 'Bearer ' + user.issue_jwt_token }
+        let(:Authorization) { 'Bearer ' + user.issue_jwt_token }
         let(:blog_id) { Blog.create(title: 'foo', content: 'bar', image: '').id }
         let(:comment) { Comment.create(content: 'foo', blog_id: blog_id, user_id: user.id) }
         let(:id) { comment.id }
@@ -240,7 +240,7 @@ describe 'Api::V2::CommentsController', swagger_doc: 'v2/swagger.yaml' do
       response '401', 'Unauthorized' do
         schema '$ref': '#/components/schemas/Error'
 
-        let(:authorization) { 'Bearer ok' }
+        let(:Authorization) { 'Bearer ok' }
         let(:id) { 1 }
 
         run_test!
@@ -248,7 +248,7 @@ describe 'Api::V2::CommentsController', swagger_doc: 'v2/swagger.yaml' do
 
       response '403', 'Forbidden' do
         let!(:user) { User.create(email: 'email@gmail.com', password: 'password', name: 'name' ) }
-        let(:authorization) { 'Bearer ' + user.issue_jwt_token }
+        let(:Authorization) { 'Bearer ' + user.issue_jwt_token }
         let!(:user2) { User.create(email: 'email2@gmail.com', password: 'password', name: 'name' ) }
         let(:blog_id) { Blog.create(title: 'foo', content: 'bar', image: '').id }
         let(:comment) { Comment.create(content: 'foo', blog_id: blog_id, user_id: user2.id) }
@@ -261,7 +261,7 @@ describe 'Api::V2::CommentsController', swagger_doc: 'v2/swagger.yaml' do
         schema '$ref': '#/components/schemas/Error'
 
         let!(:user) { User.create(email: 'email@gmail.com', password: 'password', name: 'name' ) }
-        let(:authorization) { 'Bearer ' + user.issue_jwt_token }
+        let(:Authorization) { 'Bearer ' + user.issue_jwt_token }
         let(:id) { 'foo' }
 
         run_test!

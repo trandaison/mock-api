@@ -183,6 +183,7 @@ GEM
     minitest (5.16.3)
     msgpack (1.6.0)
     multi_xml (0.6.0)
+    mysql2 (0.5.5)
     net-scp (4.0.0)
       net-ssh (>= 2.6.5, < 8.0.0)
     net-ssh (7.0.1)
@@ -192,7 +193,6 @@ GEM
       racc (~> 1.4)
     pagy (5.10.1)
       activesupport
-    pg (1.4.4)
     public_suffix (5.0.0)
     puma (5.6.5)
       nio4r (~> 2.0)
@@ -312,8 +312,8 @@ DEPENDENCIES
   httparty
   jwt
   listen (~> 3.3)
+  mysql2
   pagy (~> 5.10)
-  pg
   puma (~> 5.0)
   rack-cors
   rails (~> 6.1.4, >= 6.1.4.4)

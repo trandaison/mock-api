@@ -4,6 +4,268 @@ info:
   title: API Placeholder V2
   version: v2
 paths:
+  "/api/v2/admin/users":
+    post:
+      summary: Creates a user
+      tags:
+      - Admin Users
+      security:
+      - Authorization: []
+      parameters: []
+      responses:
+        '201':
+          description: User created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    "$ref": "#/components/schemas/User"
+                required:
+                - data
+        '401':
+          description: Unauthorize
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '403':
+          description: Fobidden
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '422':
+          description: Unprocessable entity
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error"
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: someone@example.com
+                  description: The email address
+                password:
+                  type: string
+                  example: password
+                  description: Password should be 8-72 characters
+                name:
+                  type: string
+                  example: Tony Stark
+                  description: Maximum is 50 characters
+                admin:
+                  type: boolean
+                  description: Is admin or not. Default is `false`
+                avatar:
+                  type: string
+                  format: binary
+                  description: User avatar
+              required:
+              - name
+              - email
+              - password
+    get:
+      summary: Retrieves users as a list
+      tags:
+      - Admin Users
+      security:
+      - Authorization: []
+      parameters:
+      - name: page
+        in: query
+        description: Page number. Default is `1`
+        required: false
+        schema:
+          type: number
+      - name: offset
+        in: query
+        description: Number of items per page. Default is `20`
+        required: false
+        schema:
+          type: number
+      - name: search
+        in: query
+        description: Search `name` or `email` containing the query
+        required: false
+        schema:
+          type: string
+      - name: sort_by
+        in: query
+        description: Valid value is one of `[id, name, email, created_at, updated_at,
+          admin]`. Default is `created_at`
+        required: false
+        schema:
+          type: string
+      - name: sort_direction
+        in: query
+        description: Valid value is `asc` or `desc`. Default is `desc`
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Users found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      items:
+                        type: array
+                        items:
+                          "$ref": "#/components/schemas/User"
+                          required:
+                          - email
+                          - name
+                          - avatar
+                          - created_at
+                          - updated_at
+                      pagination:
+                        "$ref": "#/components/schemas/Pagination"
+                    required:
+                    - items
+                    - pagination
+                required:
+                - data
+  "/api/v2/admin/users/{id}":
+    get:
+      summary: Retrieves a user by id
+      tags:
+      - Admin Users
+      security:
+      - Authorization: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: User found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    "$ref": "#/components/schemas/User"
+                required:
+                - data
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error"
+    put:
+      summary: Update a user
+      tags:
+      - Admin Users
+      security:
+      - Authorization: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: number
+      responses:
+        '200':
+          description: User updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    "$ref": "#/components/schemas/User"
+                required:
+                - data
+        '401':
+          description: Unauthorize
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '403':
+          description: Fobidden
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '422':
+          description: Unprocessable entity
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error"
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: someone@example.com
+                  description: The email address
+                password:
+                  type: string
+                  example: password
+                  description: Password should be 8-72 characters
+                name:
+                  type: string
+                  example: Tony Stark
+                  description: Maximum is 50 characters
+                admin:
+                  type: boolean
+                  description: Is admin or not. Default is `false`
+                avatar:
+                  type: string
+                  format: binary
+                  description: User avatar
+              required:
+              - name
+              - email
+              - password
+    delete:
+      summary: Delete a user
+      tags:
+      - Admin Users
+      security:
+      - Authorization: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: User deleted
+        '401':
+          description: Unauthorize
+        '403':
+          description: Fobidden
+        '404':
+          description: User not found
   "/api/v2/blogs":
     post:
       summary: Creates a blog
@@ -880,7 +1142,8 @@ servers:
 components:
   securitySchemes:
     Authorization:
-      description: 'JWT token for authorization. Example: `Bearer my-jwt-token`'
+      description: 'JWT token for authorization (without prefix `Bearer`). Example:
+        `myabc124.jwtabc123.tokenabc123`'
       type: http
       scheme: bearer
       bearerFormat: JWT
@@ -992,6 +1255,8 @@ components:
               type: string
           required:
           - url
+        admin:
+          type: boolean
         created_at:
           type: string
         updated_at:
@@ -1000,6 +1265,7 @@ components:
       - email
       - name
       - avatar
+      - admin
       - created_at
       - updated_at
     Pagination:
